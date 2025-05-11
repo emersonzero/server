@@ -1,20 +1,19 @@
-// Importa o framework Express
 import express from "express";
 
-// Importa o pacote do Prisma Client
+import cors from "cors";
+
 import pkg from "@prisma/client";
 
-// Extrai o PrismaClient do pacote
 const { PrismaClient } = pkg;
 
-// Cria uma instância do Prisma para interagir com o banco de dados
 const prisma = new PrismaClient();
 
-// Cria uma aplicação Express
 const app = express();
 
 // Middleware que diz ao Express para aceitar requisições com corpo no formato JSON
 app.use(express.json());
+
+app.use(cors());
 
 // Rota POST para criar um novo usuário
 app.post("/users", async (req, res) => {
@@ -27,7 +26,6 @@ app.post("/users", async (req, res) => {
     },
   });
 
-  // Retorna status 201 (criado) e o corpo da requisição como confirmação
   res.status(201).json(req.body);
 });
 
@@ -82,10 +80,9 @@ app.put("/users/:id", async (req, res, next) => {
   res.status(201).json(req.body);
 });
 
-// Inicia o servidor na porta 5000 e exibe uma mensagem no console
 app.listen(5000, () => {
   console.log("Servidor rodando na porta 5000");
 });
 
-//name: emerson
-//pass: gDDlVJ2iqBz3HFdi
+//node  --watch server.js
+//npx prisma studio
